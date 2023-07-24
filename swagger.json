@@ -27,7 +27,7 @@
     }
   ],
   "paths": {
-    "/api/contacts/register": {
+    "/users/register": {
       "post": {
         "tags": ["Auth"],
         "summary": "User registration",
@@ -46,17 +46,62 @@
         },
         "responses": {
           "201": {
-            "description": "Successful operation.Please check your email and confirm registration",
-            "content": {}
+            "description": "Registration success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
           },
           "409": {
             "description": "User with this email is already registered",
+            "content": {}
+          },
+          "400": {
+            "description": "message: 'validationResulterror'",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User login",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "requestBody": {
+          "description": "Registration body",
+          "required": "true",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+         "201": {
+            "description": "Login success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "message: 'validationResulterror'",
             "content": {}
           }
         }
       }
     }
-},
+  },
  "components": {
     "schemas": {
       "RegistrationRequest": {
@@ -97,6 +142,31 @@
             "type": "string",
             "description": "User's email",
             "format": "email"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "Session's access token (needed for all requests)",
+            "format": "string"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "User name",
+                "example": "name"
+              },
+              "email": {
+                "type": "string",
+                "description": "User email",
+                "example": "email"
+              }
+            }
           }
         }
       }

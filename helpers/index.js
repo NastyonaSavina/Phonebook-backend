@@ -7,7 +7,6 @@ const { ValidationError } = require("./errors/ValidationError");
 const { WrongParametersError } = require("./errors/WrongParametersError");
 const { RegistrationConflictError } = require("./errors/RegistrationConflictError");
 const { VerificationError } = require("./errors/VerificationError");
-const {ResendingVerificationError }= require("./errors/ResendingVerificationError")
 
 
 
@@ -19,5 +18,4 @@ module.exports = {
     NotAuthorizedError,
     RegistrationConflictError,
     VerificationError,
-    ResendingVerificationError 
 };
