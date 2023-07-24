@@ -1,0 +1,105 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "version": "1.0.0",
+    "title": "API documentation",
+    "description": "API documentation for Phonebook project.",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "consumes": ["application/json", "multipart/form-data"],
+  "produces": ["application/json"],
+  "servers": [ 
+    {
+      "url": "https://phonebook-backend-nhte.onrender.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authorization endpoints"
+    },
+    {
+      "name": "Contacts",
+      "description": "Contacts endpoints"
+    }
+  ],
+  "paths": {
+    "/api/contacts/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User registration",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "requestBody": {
+          "description": "Registration body",
+          "required": "true",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation.Please check your email and confirm registration",
+            "content": {}
+          },
+          "409": {
+            "description": "User with this email is already registered",
+            "content": {}
+          }
+        }
+      }
+    }
+},
+ "components": {
+    "schemas": {
+      "RegistrationRequest": {
+        "type": "object",
+        "required": ["name", "email", "password"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "Peter Petigry"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "1234qwerl"
+          }
+        }
+      },
+      "RegistrationResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "User's id",
+            "example": "642831f346155749a2b6e944"
+          },
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "Peter Petigry"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          }
+        }
+      }
+    }
+}
+}
